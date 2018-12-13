@@ -22,5 +22,16 @@ class questioniers extends Model
 
 	public function Questions(){
 		return $this->hasMany('App\questions', 'questionier_id', 'id');
+	}
+
+	protected static function boot() 
+	{
+		parent::boot();
+
+		static::deleting(function($questioniers) {
+			foreach ($questioniers->Questions()->get() as $question) {
+				$question->delete();
+			}
+		});
 	}  
 }

@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Auth;
 class QuestionierController extends Controller
 {
 
-   public function __construct()
-   {
+ public function __construct()
+ {
     $this->middleware('auth');
 }
 
@@ -39,7 +39,9 @@ class QuestionierController extends Controller
     {
         Auth::user()->authorizeRoles(['employee', 'admin']);
 
-        return view('admin.questionier_create');
+        $data['form'] = 'create';
+
+        return view('admin.questionier_create')->with('data',$data);
     }
 
     /**
@@ -82,9 +84,16 @@ class QuestionierController extends Controller
      * @param  \App\questioniers  $questioniers
      * @return \Illuminate\Http\Response
      */
-    public function edit(questioniers $questioniers)
+    public function edit(questioniers $questionier)
     {
-        //
+       Auth::user()->authorizeRoles(['employee', 'admin']);
+
+       $data['questionier'] = $questionier;
+       $data['form'] = 'edit';
+
+       return view('admin.questionier_create')->with('data',$data);
+
+
     }
 
     /**
@@ -94,9 +103,17 @@ class QuestionierController extends Controller
      * @param  \App\questioniers  $questioniers
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, questioniers $questioniers)
+    public function update(Request $request, questioniers $questionier)
     {
-        //
+        $questionier->user_id = Auth::id();
+        $questionier->name = $request->name;
+        $questionier->duration = $request->duration;
+        $questionier->resumeable = $request->resumeable;
+        $questionier->published = $request->published;
+
+        $questionier->save();
+
+        return redirect('/questioniers');
     }
 
     /**
@@ -105,9 +122,11 @@ class QuestionierController extends Controller
      * @param  \App\questioniers  $questioniers
      * @return \Illuminate\Http\Response
      */
-    public function destroy(questioniers $questioniers)
+    public function destroy(questioniers $questionier)
     {
-        //
+        $questionier->delete(); 
+
+        return redirect('/questioniers');
     }
 
     //Methods to create a new question in existing questionair
@@ -150,7 +169,7 @@ class QuestionierController extends Controller
                 
                 if($request->type[$key] != 'text'){
                     foreach ($request->$choices as $key => $choice) {
-                       if($choice){
+                     if($choice){
 
                         $choice_db = new choices;
 
