@@ -105,6 +105,8 @@ class QuestionierController extends Controller
      */
     public function update(Request $request, questioniers $questionier)
     {
+        Auth::user()->authorizeRoles(['employee', 'admin']);
+
         $questionier->user_id = Auth::id();
         $questionier->name = $request->name;
         $questionier->duration = $request->duration;
@@ -124,6 +126,8 @@ class QuestionierController extends Controller
      */
     public function destroy(questioniers $questionier)
     {
+        Auth::user()->authorizeRoles(['employee', 'admin']);
+        
         $questionier->delete(); 
 
         return redirect('/questioniers');
