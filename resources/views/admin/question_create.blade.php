@@ -274,7 +274,7 @@
 				<input type="text" class="form-control ques-text make-question">
 			</div>
 			<div class="col-sm-2">
-				<a href="javascript:void(0)" class="push-right">Delete Question</a>
+				<a href="javascript:void(0)" class="delete-question">Delete Question</a>
 			</div>
 		</div>
 		<div class="form-group row">
@@ -294,7 +294,7 @@
 				<input type="text" class="form-control make-answer hide">
 			</div>
 			<div class="col-sm-2">
-				<a href="javascript:void(0)" class="push-right">Delete Question</a>
+				<a href="javascript:void(0)" class="delete-question">Delete Question</a>
 			</div>
 		</div>
 		<div class="form-group row">
@@ -350,7 +350,7 @@
 				<input type="text" class="form-control make-answer hide">
 			</div>
 			<div class="col-sm-2">
-				<a href="javascript:void(0)" class="push-right">Delete Question</a>
+				<a href="javascript:void(0)" class="delete-question">Delete Question</a>
 			</div>
 		</div>
 		<div class="form-group row">
@@ -520,6 +520,11 @@
 		});
 
 		$("#qcf").on('change','.ques-text',function(){
+			if($(this).val().substr(0, 1)=='.'){
+				$(this).val('');
+				alert('Question should start with a proper name not "."');
+				return false;
+			}
 			var $choices_name = $(this).val().replace(/ /g,"_")+'[]';
 			var $correct_choices = $(this).val().replace(/ /g,"_")+'_correct[]';
 			$(this).closest('.main-parent').find('.q2_choices').attr('name',$choices_name);
@@ -547,6 +552,7 @@
 			$clone.insertBefore($template);
 
 		});	
+
 	})
 
 
