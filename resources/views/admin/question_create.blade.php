@@ -135,7 +135,7 @@
 						</div>
 						@endforeach	
 						<!-- Choice Template -->
-						<div id="choice-template" class="form-group row hide">
+						<div class="form-group row hide choice-template">
 							<label class="col-sm-3 col-form-label opt-label"></label>
 							<div class="col-sm-7">
 								<input type="text" class="q2_choices form-control t-make-opt">
@@ -198,7 +198,7 @@
 						</div>
 						@endforeach	
 						<!-- Choice Template -->
-						<div id="choice-template-2" class="form-group row hide">
+						<div class="form-group row hide choice-template-2">
 							<label class="col-sm-3 col-form-label opt-label"></label>
 							<div class="col-sm-7">
 								<input type="text" class="q2_choices form-control t-make-opt">
@@ -328,7 +328,7 @@
 			</div>
 		</div>
 		<!-- Choice Template -->
-		<div id="choice-template" class="form-group row hide">
+		<div class="form-group row hide choice-template">
 			<label class="col-sm-3 col-form-label opt-label"></label>
 			<div class="col-sm-7">
 				<input type="text" class="q2_choices form-control t-make-opt">
@@ -384,7 +384,7 @@
 			</div>
 		</div>
 		<!-- Choice Template -->
-		<div id="choice-template-2" class="form-group row hide">
+		<div class="form-group row hide choice-template-2">
 			<label class="col-sm-3 col-form-label opt-label"></label>
 			<div class="col-sm-7">
 				<input type="text" class="q2_choices form-control t-make-opt">
@@ -470,11 +470,11 @@
 
 		$("#qcf").on('click','.add-choice',function(e){
 			e.preventDefault();
-			var $template = $('#choice-template');
+			var $template = $(this).closest('.parent-2').find('.choice-template');
 			$clone    = $template
 			.clone()
 			.removeClass('hide')
-			.removeAttr('id');
+			.removeClass('choice-template');
 			var $choices_name = $(this).closest('.main-parent').find('.q2_choices').attr('name');
 			var $correct_choices_name = $(this).closest('.main-parent').find('.q_choices').attr('name');
 			$clone.find('.t-make-opt').attr('name',$choices_name).removeClass('make-opt');
@@ -489,11 +489,11 @@
 
 		$("#qcf").on('click','.add-choice-2',function(e){
 			e.preventDefault();
-			var $template = $('#choice-template-2');
+			var $template = $(this).closest('.parent-2').find('.choice-template-2');
 			$clone    = $template
 			.clone()
 			.removeClass('hide')
-			.removeAttr('id');
+			.removeClass('choice-template-2');
 			var $choices_name = $(this).closest('.main-parent').find('.q2_choices').attr('name');
 			var $correct_choices_name = $(this).closest('.main-parent').find('.q_choices').attr('name');
 			$clone.find('.t-make-opt').attr('name',$choices_name).removeClass('make-opt');
